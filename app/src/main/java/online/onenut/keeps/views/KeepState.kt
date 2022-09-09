@@ -44,7 +44,7 @@ class KeepState() {
 
                 listOfKeep.forEach {
                     if (it.ID == currentID.value)
-                        s = it ?: null
+                        s = it
                 }
 
                 s?.apply {
@@ -54,6 +54,23 @@ class KeepState() {
 
                 restTextFieldValue()
             }
+        }
+    }
+
+    fun getKeepWithID(ID: Long): KeepNotes? {
+        listOfKeep.forEach {
+            if (it.ID == ID)
+                return it ?: null
+        }
+        return null
+    }
+
+    fun deleteKeep() {
+        if (currentID.value != null) {
+            val temp = getKeepWithID(currentID.value!!)
+            restTextFieldValue()
+            isEditClicked.value = false
+            listOfKeep.remove(temp)
         }
     }
 
@@ -70,6 +87,7 @@ class KeepState() {
     }
 
     private fun restTextFieldValue() {
+        currentID.value = null
         titleTFS.value = TextFieldValue()
         descriptionTFS.value = TextFieldValue()
         isFaviouriteFS.value = false

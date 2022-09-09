@@ -54,7 +54,8 @@ fun App(state: KeepState) {
                 },
                 onClose = {
                     state.updateOrCreateKeep()
-                }
+                },
+                onDeleteClicked = { state.deleteKeep() }
             )
             KeepsGridView(state.listOfKeep, onPreviewClick = {
                 state.loadKeep(it)

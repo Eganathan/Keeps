@@ -2,9 +2,12 @@ package online.onenut.keeps.views
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -29,7 +32,8 @@ fun EditComponent(
     descriptionTSF: MutableState<TextFieldValue>,
     isSavedKeep: Boolean,
     onTitleClick: () -> Unit,
-    onClose: () -> Unit
+    onClose: () -> Unit,
+    onDeleteClicked: () -> Unit = {}
 ) {
     val fr = remember {
         FocusRequester()
@@ -110,8 +114,22 @@ fun EditComponent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 5.dp),
-                        horizontalArrangement = Arrangement.End
+                        horizontalArrangement = if (isSavedKeep) Arrangement.SpaceBetween else Arrangement.End
                     ) {
+
+                        if (isSavedKeep)
+                            IconButton(
+                                onClick = { onDeleteClicked.invoke() },
+                                modifier = Modifier
+                                    .clip(CircleShape),
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "",
+                                    tint = MaterialTheme.colors.error.copy(alpha = 0.6f)
+                                )
+                            }
+
                         Text(text = "close",
                             modifier = Modifier
                                 .clip(RoundedCornerShape(5.dp))
