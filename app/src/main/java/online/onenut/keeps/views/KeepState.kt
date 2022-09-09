@@ -9,6 +9,7 @@ import online.onenut.keeps.entity.KeepNotes
 class KeepState() {
 
     val isEditClicked = mutableStateOf(false)
+    val searchState = mutableStateOf(false)
 
     val searchTFS = mutableStateOf(TextFieldValue())
 
@@ -19,6 +20,8 @@ class KeepState() {
     val currentID: MutableState<Long?> = mutableStateOf(null)
 
     val listOfKeep = mutableStateListOf<KeepNotes>()
+    val filterdOfKeep = mutableStateListOf<KeepNotes>()
+
     var lastID: Long = 1
 
     private fun generateID(): Long {
@@ -71,6 +74,19 @@ class KeepState() {
             restTextFieldValue()
             isEditClicked.value = false
             listOfKeep.remove(temp)
+        }
+    }
+
+    fun getFilteredList(search: String) {
+        val list = listOfKeep.filter {
+            it.title.value.contains(search) || it.description.value.contains(search)
+        }
+
+        if (search.isNotEmpty())
+            filterdOfKeep.addAll(listOfKeep)
+        else {
+            filterdOfKeep.removeAll(filterdOfKeep)
+            filterdOfKeep.addAll(list)
         }
     }
 

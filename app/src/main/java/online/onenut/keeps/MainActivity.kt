@@ -39,7 +39,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun App(state: KeepState) {
     Scaffold(
-        topBar = { TopBar(searchTFS = state.searchTFS) },
+        topBar = {
+            TopBar(
+                searchTFS = state.searchTFS,
+                searchState = state.searchState,
+                onSearchTyped = { state.getFilteredList(it) })
+        },
         /*bottomBar = { BottomBar() }*/
     )
     {
@@ -57,9 +62,11 @@ fun App(state: KeepState) {
                 },
                 onDeleteClicked = { state.deleteKeep() }
             )
-            KeepsGridView(state.listOfKeep, onPreviewClick = {
-                state.loadKeep(it)
-            })
+            KeepsGridView(
+                if (state.searchState.value) state.filterdOfKeep else state.listOfKeep,
+                onPreviewClick = {
+                    state.loadKeep(it)
+                })
         }
     }
 }

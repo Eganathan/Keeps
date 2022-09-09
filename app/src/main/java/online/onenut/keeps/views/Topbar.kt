@@ -8,7 +8,10 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,16 +25,17 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun TopBar(
-    searchTFS: MutableState<TextFieldValue>
+    searchTFS: MutableState<TextFieldValue>,
+    searchState: MutableState<Boolean>,
+    onSearchTyped: (String) -> Unit
 ) {
-    val isOpen: MutableState<Boolean> = remember { mutableStateOf(false) }
     val fr = remember {
         FocusRequester()
     }
 
-    LaunchedEffect(key1 = isOpen.value)
+    LaunchedEffect(key1 = searchState.value)
     {
-        if (isOpen.value) {
+        if (searchState.value) {
             delay(250)
             fr.requestFocus()
         }
@@ -55,7 +59,7 @@ fun TopBar(
                     Icon(imageVector = Icons.Default.Settings, contentDescription = "")
                 }
 
-                if (!isOpen.value) {
+                if (!searchState.value) {
                     Text(
                         text = "Keeps", style = MaterialTheme.typography.h4,
                         color = MaterialTheme.colors.onPrimary,
@@ -64,7 +68,10 @@ fun TopBar(
                 } else {
                     TextField(
                         value = searchTFS.value,
-                        onValueChange = { searchTFS.value = it },
+                        onValueChange = {
+                            searchTFS.value = it;
+                            onSearchTyped.invoke(it.text)
+                        },
                         placeholder = {
                             BasicText(
                                 text = "Search...",
@@ -86,10 +93,10 @@ fun TopBar(
 
                 IconButton(
                     onClick = {
-                        if (!isOpen.value)
+                        if (!searchState.value)
                             searchTFS.value = TextFieldValue()
 
-                        isOpen.value = !isOpen.value
+                        searchState.value = !searchState.value
                     },
                     modifier = Modifier.clip(CircleShape)
                 ) {
