@@ -30,7 +30,8 @@ import kotlinx.coroutines.delay
 fun TopBar(
     searchTFS: MutableState<TextFieldValue>,
     searchState: MutableState<Boolean>,
-    onSearchTyped: (String) -> Unit
+    onSearchTyped: (String) -> Unit,
+    onSettingsClicked: () -> Unit
 ) {
     val fr = remember {
         FocusRequester()
@@ -56,10 +57,14 @@ fun TopBar(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(
-                    onClick = { },
+                    onClick = { onSettingsClicked.invoke() },
                     modifier = Modifier.clip(CircleShape)
                 ) {
-                    Icon(imageVector = Icons.Default.Settings, contentDescription = "")
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        tint = MaterialTheme.colors.onPrimary,
+                        contentDescription = ""
+                    )
                 }
 
                 if (!searchState.value) {
@@ -87,7 +92,7 @@ fun TopBar(
                     TextField(
                         value = searchTFS.value,
                         onValueChange = {
-                            searchTFS.value = it;
+                            searchTFS.value = it
                             onSearchTyped.invoke(it.text)
                         },
                         placeholder = {
@@ -121,6 +126,7 @@ fun TopBar(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Search,
+                        tint = MaterialTheme.colors.onPrimary,
                         contentDescription = "",
                     )
                 }

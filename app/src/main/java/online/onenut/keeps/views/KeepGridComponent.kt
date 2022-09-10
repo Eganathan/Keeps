@@ -17,7 +17,7 @@ fun KeepsGridView(listOfKeep: MutableList<KeepNotes>, onPreviewClick: (KeepNotes
             cells = GridCells.Fixed(2),
             contentPadding = PaddingValues(5.dp),
             verticalArrangement = Arrangement.Center,
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.Center
         ) {
             items(listOfKeep.size)
             {

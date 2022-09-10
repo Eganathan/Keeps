@@ -1,15 +1,26 @@
 package online.onenut.keeps.views
 
+import androidx.compose.material.DrawerState
+import androidx.compose.material.DrawerValue
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
+import kotlinx.coroutines.CoroutineScope
 import online.onenut.keeps.entity.KeepNotes
+import kotlin.coroutines.CoroutineContext
 
-class KeepState() {
+class KeepState(context: CoroutineContext) {
+
+
+    val snackbarHostState = SnackbarHostState()
+    val drawerState = DrawerState(initialValue = DrawerValue.Closed)
+    val scope = CoroutineScope(context = context)
 
     val isEditClicked = mutableStateOf(false)
     val searchState = mutableStateOf(false)
+    val isDrawerOpen = mutableStateOf(false)
 
     val searchTFS = mutableStateOf(TextFieldValue())
 
