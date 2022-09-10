@@ -5,12 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import online.onenut.keeps.ui.theme.KeepsTheme
 import online.onenut.keeps.views.EditComponent
 import online.onenut.keeps.views.KeepState
@@ -46,6 +48,22 @@ fun App(state: KeepState) {
                 onSearchTyped = { state.getFilteredList(it) })
         },
         /*bottomBar = { BottomBar() }*/
+        floatingActionButton = {
+            if (!state.isEditClicked.value)
+                FloatingActionButton(
+                    backgroundColor = MaterialTheme.colors.secondaryVariant,
+                    shape = RoundedCornerShape(15.dp),
+                    onClick = {
+                        state.isEditClicked.value = true
+                        state.restTextFieldValue()
+                    }) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        tint = MaterialTheme.colors.onPrimary,
+                        contentDescription = "",
+                    )
+                }
+        },
     )
     {
         Column {

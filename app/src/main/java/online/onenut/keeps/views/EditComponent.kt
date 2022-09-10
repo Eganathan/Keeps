@@ -70,7 +70,10 @@ fun EditComponent(
                         placeholder = {
                             BasicText(
                                 text = "Title",
-                                style = TextStyle(fontWeight = FontWeight.Bold),
+                                style = TextStyle(
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.Gray
+                                ),
                                 modifier = Modifier.padding(0.dp)
                             )
                         },
@@ -94,6 +97,7 @@ fun EditComponent(
                         placeholder = {
                             BasicText(
                                 text = "Take a note...",
+                                style = TextStyle(color = Color.LightGray),
                                 modifier = Modifier.padding(0.dp)
                             )
                         },

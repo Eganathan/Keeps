@@ -102,7 +102,7 @@ class KeepState() {
         restTextFieldValue()
     }
 
-    private fun restTextFieldValue() {
+    fun restTextFieldValue() {
         currentID.value = null
         titleTFS.value = TextFieldValue()
         descriptionTFS.value = TextFieldValue()
