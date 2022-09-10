@@ -20,10 +20,18 @@ fun KeepPreviewCard(keep: KeepNotes, onClick: (KeepNotes) -> Unit) {
         shape = RoundedCornerShape(5.dp),
         elevation = 2.dp,
         modifier = Modifier.padding(5.dp),
-        onClick = { onClick(keep) }
+        onClick = { onClick(keep) },
+        /*backgroundColor = Color(
+            Random.nextInt(0, 255),
+            Random.nextInt(0, 255),
+            Random.nextInt(0, 255)
+        ).copy(alpha = 0.1f)*/
     )
     {
-        Column(modifier = Modifier.padding(10.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(10.dp)
+        ) {
             if (keep.title.value.isNotBlank())
                 Row(
                     modifier = Modifier.fillMaxWidth(),

@@ -17,7 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,7 +39,7 @@ fun TopBar(
     LaunchedEffect(key1 = searchState.value)
     {
         if (searchState.value) {
-            delay(250)
+            delay(200)
             fr.requestFocus()
         }
     }
@@ -61,9 +64,24 @@ fun TopBar(
 
                 if (!searchState.value) {
                     Text(
-                        text = "Keeps", style = MaterialTheme.typography.h4,
+                        text = "Keeps",
+                        style = MaterialTheme.typography.h4.copy(
+                            fontFamily = FontFamily.Serif,
+                            fontStyle = FontStyle.Italic
+                        ),
                         color = MaterialTheme.colors.onPrimary,
-                        letterSpacing = 1.sp
+                        letterSpacing = 5.sp,
+                        /*modifier = Modifier.border(
+                            width = 1.5.dp,
+                            brush = Brush.horizontalGradient(
+                                0.0f to Color.Red,
+                                0.3f to Color.Green,
+                                1.0f to Color.Blue,
+                                startX = 0.1f,
+                                endX = 1000.0f
+                            ),
+                            RectangleShape
+                        )*/
                     )
                 } else {
                     TextField(
@@ -79,9 +97,10 @@ fun TopBar(
                             )
                         },
                         colors = TextFieldDefaults.outlinedTextFieldColors(
-                            backgroundColor = MaterialTheme.colors.onPrimary
+                            backgroundColor = MaterialTheme.colors.onPrimary,
+                            focusedBorderColor = Color.White,
                         ),
-                        maxLines = 1,
+                        singleLine = true,
                         shape = RectangleShape,
                         modifier = Modifier
                             .fillMaxHeight(0.8f)

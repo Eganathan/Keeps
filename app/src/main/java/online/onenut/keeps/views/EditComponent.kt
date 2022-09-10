@@ -117,7 +117,8 @@ fun EditComponent(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 5.dp),
+                            .padding(horizontal = 5.dp, vertical = 0.dp),
+                        verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = if (isSavedKeep) Arrangement.SpaceBetween else Arrangement.End
                     ) {
 
@@ -134,13 +135,23 @@ fun EditComponent(
                                 )
                             }
 
-                        Text(text = "close",
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(5.dp))
-                                .clickable {
-                                    onClose.invoke()
-                                    isEditClicked.value = !isEditClicked.value
-                                })
+                        Button(
+                            onClick = {
+                                onClose.invoke()
+                                isEditClicked.value = !isEditClicked.value
+                            },
+                            elevation = ButtonDefaults.elevation(
+                                defaultElevation = 0.dp,
+                                pressedElevation = 0.dp,
+                                focusedElevation = 0.dp
+                            ),
+                            shape = RoundedCornerShape(5.dp),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
+                        ) {
+                            Text(
+                                text = "close"
+                            )
+                        }
                     }
                 } else {
                     Text(text = "Take a note...",
